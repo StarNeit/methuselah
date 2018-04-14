@@ -1,0 +1,22 @@
+[Unit]
+Description=Methuselah's distributed currency daemon
+After=network.target
+
+[Service]
+User=methuselah
+Group=methuselah
+
+Type=forking
+PIDFile=/var/lib/methuselahd/methuselahd.pid
+ExecStart=/usr/bin/methuselahd -daemon -pid=/var/lib/methuselahd/methuselahd.pid \
+-conf=/etc/methuselah/methuselah.conf -datadir=/var/lib/methuselahd -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

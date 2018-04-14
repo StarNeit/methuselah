@@ -1,0 +1,33 @@
+# /etc/conf.d/methuselahd: config file for /etc/init.d/methuselahd
+
+# Config file location
+#METHUSELAHD_CONFIGFILE="/etc/methuselah/methuselah.conf"
+
+# What directory to write pidfile to?  (created and owned by $METHUSELAHD_USER)
+#METHUSELAHD_PIDDIR="/var/run/methuselahd"
+
+# What filename to give the pidfile
+#METHUSELAHD_PIDFILE="${METHUSELAHD_PIDDIR}/methuselahd.pid"
+
+# Where to write methuselahd data (be mindful that the blockchain is large)
+#METHUSELAHD_DATADIR="/var/lib/methuselahd"
+
+# User and group to own methuselahd process
+#METHUSELAHD_USER="methuselah"
+#METHUSELAHD_GROUP="methuselah"
+
+# Path to methuselahd executable
+#METHUSELAHD_BIN="/usr/bin/methuselahd"
+
+# Nice value to run methuselahd under
+#METHUSELAHD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+METHUSELAHD_OPTS="-disablewallet"
+
+# The timeout in seconds OpenRC will wait for methuselahd to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+METHUSELAHD_SIGTERM_TIMEOUT=60

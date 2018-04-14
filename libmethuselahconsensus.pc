@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Methuselah Core consensus library
+Description: Library for the METHUSELAH consensus protocol.
+Version: 1.14.7
+Libs: -L${libdir} -lmethuselahconsensus
+Cflags: -I${includedir}
+Requires.private: libcrypto

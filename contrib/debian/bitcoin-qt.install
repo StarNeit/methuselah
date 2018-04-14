@@ -1,0 +1,6 @@
+usr/local/bin/methuselah-qt usr/bin
+share/pixmaps/methuselah32.xpm usr/share/pixmaps
+share/pixmaps/methuselah16.xpm usr/share/pixmaps
+share/pixmaps/methuselah128.png usr/share/pixmaps
+debian/methuselah-qt.desktop usr/share/applications
+debian/methuselah-qt.protocol usr/share/kde4/services/

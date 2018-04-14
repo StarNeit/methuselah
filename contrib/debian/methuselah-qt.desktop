@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Methuselah
+Comment=Methuselah P2P Cryptocurrency
+Exec=methuselah-qt %u
+Terminal=false
+Type=Application
+Icon=methuselah128
+MimeType=x-scheme-handler/methuselah;
+Categories=Office;Finance;
+Name[en_US]=methuselah-qt.desktop
