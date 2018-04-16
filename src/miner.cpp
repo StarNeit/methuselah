@@ -185,7 +185,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     nLastBlockSize = nBlockSize;
     nLastBlockWeight = nBlockWeight;
 
-	int payments = nHeight > chainparams.GetConsensus().MasternodePaymentStartHeight ? 2 : 1;
+	int payments = nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight ? 2 : 1;
 
     // Create coinbase transaction.
     CMutableTransaction coinbaseTx;
@@ -231,7 +231,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     CAmount masternodePayment = GetMasternodePayment(pindexPrev->nHeight+1, blockValue, Params().GetConsensus());
 
     //create masternode payment
-    if(payments > 2){
+    if(payments >= 2){
         coinbaseTx.vout[payments-1].nValue = masternodePayment;
         blockValue -= masternodePayment;
     }
