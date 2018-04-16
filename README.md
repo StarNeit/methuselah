@@ -50,11 +50,10 @@ __________________________________________________________________________
 
 ### Links
 
-- **[Methuselah Discord](https://discord.gg/5gzvadZ)**
+- **[Methuselah Discord](https://discord.gg/4p5muhb)**
 - **[Methuselah Explorer](https://explorer.methuselahcoin.io)**
 - **[Methuselah Facebook](https://www.facebook.com/MethuselahCoin)**
 - **[Methuselah Reddit](https://www.reddit.com/r/MethuselahCoin)**
-- **[Methuselah Telegram](https://t.me/joinchat/AAAAAFNgas-8mT4fmKulFg)**
 - **[Methuselah Twitter](https://twitter.com/MethuselahCoin)**
 - **[Methuselah Website](https://methuselahcoin.io)**
 
