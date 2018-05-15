@@ -62,11 +62,11 @@ __________________________________________________________________________
 
 ### Methuselah Foundation Team
 
-- **Hetus - Lead Developer, Wizard**
-- **Maxhaker - Marketing, Community Management**
-- **TaterDoge - Automation,  Development**
-- **Toadboy - Project Management**
-- **Zeus - Branding, Design**
+- **Methuse - Lead Developer, Wizard**
+- **Jooky - Marketing, Community Management**
+- **Theweakshall - Automation,  Development**
+- **Protoxylem - Project Management**
+- **Zeusofethereum - Branding, Design**
 
 __________________________________________________________________________
 
