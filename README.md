@@ -1,5 +1,5 @@
 
-![Alt text](https://github.com/hetus/methuselah/raw/master/doc/methuselah.png)
+![Methuselah Cryptocurrency](https://github.com/methuselah-coin/methuselah/raw/master/doc/methuselah.png)
 
 
 ## Methuselah
