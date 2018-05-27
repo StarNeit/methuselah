@@ -112,6 +112,8 @@ For Qt 5 you need the following:
 
     sudo apt-get install libqt5gui5 libqt5core5 libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev
 
+_Note: If building for Ubuntu 18+ please replace `libqt5core5` with `libqt5core5a`._
+
 libqrencode (optional) can be installed with:
 
     sudo apt-get install libqrencode-dev
