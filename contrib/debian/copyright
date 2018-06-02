@@ -5,9 +5,9 @@ Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
 Source: https://github.com/methuselah-coin/methuselah
 
 Files: *
-Copyright: 2009-2017, Methuselah Developers
+Copyright: 2018, Methuselah Developers
 License: Expat
-Comment: The Methuselah Developers encompasses the current developers listed on methuselah.org,
+Comment: The Methuselah Developers encompasses the current developers listed on methuselahcoin.io,
          as well as the numerous contributors to the project.
 
 Files: debian/*

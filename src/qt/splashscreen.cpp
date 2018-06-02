@@ -41,8 +41,10 @@ SplashScreen::SplashScreen(Qt::WindowFlags f) :
     // define text to place
     QString titleText       = tr("Methuselah Core");
     QString versionText     = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
-    QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Methuselah Developers"));
-    QString copyrightTextDrk   = QChar(0xA9)+QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Methuselah Developers"));
+    QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Bitcoin Developers"));
+    QString copyrightTextDash   = QChar(0xA9)+QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Dash Developers"));
+    QString copyrightTextSTRAK   = QChar(0xA9)+QString(" 2017-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("STRAKS Developers"));
+    QString copyrightTextSap   = QChar(0xA9)+QString(" 2018-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Methuselah Developers"));
     QString testnetAddText  = QString(tr("[testnet]")); // define text to place as single text object
 
     QString font            = "Arial";
@@ -51,7 +53,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f) :
     pixmap     = QPixmap(":/images/splash");
 
     QPainter pixPaint(&pixmap);
-    pixPaint.setPen(QColor(100,100,100));
+    pixPaint.setPen(QColor(255,255,255));
 
     // check font size and drawing with
     pixPaint.setFont(QFont(font, 28*fontFactor));
@@ -73,7 +75,9 @@ SplashScreen::SplashScreen(Qt::WindowFlags f) :
     // draw copyright stuff
     pixPaint.setFont(QFont(font, 10*fontFactor));
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace,copyrightTextBtc);
-    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+12,copyrightTextDrk);
+    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+12,copyrightTextDash);
+    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+24,copyrightTextSTRAK);
+    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+36,copyrightTextSap);
 
     // draw testnet string if testnet is on
     /* if(isTestNet) {
@@ -119,7 +123,7 @@ static void InitMessage(SplashScreen *splash, const std::string &message)
         Qt::QueuedConnection,
         Q_ARG(QString, QString::fromStdString(message)),
         Q_ARG(int, Qt::AlignBottom|Qt::AlignHCenter),
-        Q_ARG(QColor, QColor(55,55,55)));
+        Q_ARG(QColor, QColor(255,255,255)));
 }
 
 static void ShowProgress(SplashScreen *splash, const std::string &title, int nProgress)

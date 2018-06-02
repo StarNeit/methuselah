@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Methuselah Developers
+# Copyright (c) 2018 Methuselah Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -365,10 +365,7 @@ METHUSELAH_QT_CPP += $(METHUSELAH_QT_WALLET_CPP)
 endif
 
 RES_CSS = \
-  qt/res/css/methuselah_main.css \
-  qt/res/css/methuselah_theme1.css \
-  qt/res/css/methuselah_theme2.css \
-  qt/res/css/methuselah_theme3.css 
+  qt/res/css/default.css 
   
   
 RES_IMAGES = \

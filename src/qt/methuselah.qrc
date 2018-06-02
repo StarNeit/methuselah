@@ -60,10 +60,7 @@
         <file alias="network_disabled">res/icons/network_disabled.png</file>
     </qresource>
 	<qresource prefix="/css">
-        <file alias="methuselah_main">res/css/methuselah_main.css</file>
-	<file alias="methuselah_theme1">res/css/methuselah_theme1.css</file>
-	<file alias="methuselah_theme2">res/css/methuselah_theme2.css</file>
-	<file alias="methuselah_theme3">res/css/methuselah_theme3.css</file>
+        <file alias="default">res/css/default.css</file>
     </qresource>
 	<qresource prefix="/images">
 	    <file alias="about">res/images/about.png</file>

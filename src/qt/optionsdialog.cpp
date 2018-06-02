@@ -80,10 +80,8 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     /* Display elements init */
     QDir translations(":translations");
 	//themes kaali
-	//ui->theme->addItem(QString("Blue arrow"), QVariant("methuselah_main"));
-    //ui->theme->addItem(QString("Linux red"), QVariant("methuselah_theme1"));
-    ui->theme->addItem(QString("default"), QVariant("methuselah_theme2"));
-	//ui->theme->addItem(QString("Lambo Car"), QVariant("methuselah_theme3"));
+    // [methuse] FIX: updated wallet style
+    ui->theme->addItem(QString("default"), QVariant("default"));
     ui->theme->addItem(QString("classic"), QVariant("trad"));
 
     ui->methuselahAtStartup->setToolTip(ui->methuselahAtStartup->toolTip().arg(tr(PACKAGE_NAME)));

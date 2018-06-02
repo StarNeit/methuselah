@@ -310,10 +310,7 @@ RES_IMAGES = \
   res/images/methuselah_theme3_hg.png
 
 RES_CSS = \
-  res/css/methuselah_main.css \
-  res/css/methuselah_theme1.css \
-  res/css/methuselah_theme2.css \
-  res/css/methuselah_theme3.css 
+  res/css/default.css 
   
 RES_MOVIES = $(wildcard res/movies/spinner-*.png)
 

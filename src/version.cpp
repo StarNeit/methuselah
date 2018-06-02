@@ -1,6 +1,6 @@
 /*// Copyright (c) 2017 The STRAKS developers
 // Copyright (c) 2017-2018 The Methuselah Developers
-// Copyright (c) 2017 METHUSELAH developers
+// Copyright (c) 2018 Methuselah developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 

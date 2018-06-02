@@ -1,10 +1,10 @@
 METHUSELAH
 ======
 
-##### Copyright (c) 2009-2017 Bitcoin Developers
-##### Copyright (c) 2014-2015 Dash Developers
+##### Copyright (c) 2009-2018 Bitcoin Developers
+##### Copyright (c) 2014-2018 Dash Developers
 ##### Copyright (c) 2017-2018 STRAKS Developers
-##### Copyright (c) 2017-2018 METHUSELAH Developers
+##### Copyright (c) 2018 Methuselah Developers
 
 Setup
 ---------------------

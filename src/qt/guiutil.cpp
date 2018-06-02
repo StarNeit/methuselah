@@ -896,8 +896,8 @@ QString loadStyleSheet()
         cssName = QString(":/css/") + theme; 
     }
     else {
-        cssName = QString(":/css/methuselah_theme2");  
-        settings.setValue("theme", "methuselah_theme2");
+        cssName = QString(":/css/default");  
+        settings.setValue("theme", "default");
     }
     
     QFile qFile(cssName);      
