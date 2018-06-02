@@ -15,7 +15,7 @@ void CMasternodeConfig::add(std::string alias, std::string ip, std::string privK
 bool CMasternodeConfig::read(std::string& strErr) {
     boost::filesystem::ifstream streamConfig(GetMasternodeConfigFile());
     if (!streamConfig.good()) {
-        return true; // No masternode.conf file is OK
+        return true;
     }
 
     for(std::string line; std::getline(streamConfig, line); )
