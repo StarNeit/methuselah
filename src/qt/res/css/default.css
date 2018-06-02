@@ -24,9 +24,10 @@ QStatusBar {
 }
 QStatusBar::item {
     border: 1px solid #000000;
+    color: #666666;
 }
-QStatusBar QIcon {
-    color: #ffffff;
+QStatusBar QComboBox::item {
+    color: #666666;
 }
 
 .QFrame {
