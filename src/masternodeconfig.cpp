@@ -15,7 +15,13 @@ void CMasternodeConfig::add(std::string alias, std::string ip, std::string privK
 bool CMasternodeConfig::read(std::string& strErr) {
     boost::filesystem::ifstream streamConfig(GetMasternodeConfigFile());
     if (!streamConfig.good()) {
-        return true;
+        // [hetus] FIX: Create empty methuselah.conf if it does not exist
+        FILE* configFile = fopen(GetMasternodeConfigFile().string().c_str(), "a");
+        if (configFile == NULL)
+            return true;
+            
+        fclose(configFile);
+        streamConfig.open(GetMasternodeConfigFile());
     }
 
     for(std::string line; std::getline(streamConfig, line); )
