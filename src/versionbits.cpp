@@ -179,7 +179,7 @@ protected:
                 deployed = false;
         }
 
-        // LogPrintf("[hetus] AuthoritativeDeployment %d => %d\n", id, deployed);
+        // LogPrintf("[methuse] AuthoritativeDeployment %d => %d\n", id, deployed);
 
         return deployed;
     };

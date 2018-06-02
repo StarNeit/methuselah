@@ -28,11 +28,11 @@ using namespace boost;
 #define SPORK_6_NOTUSED                                       10005
 #define SPORK_7_MASTERNODE_SCANNING                           10006
 
-#define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT_DEFAULT       1523923283   // [hetus] TODO: update
-#define SPORK_2_INSTANTX_DEFAULT                              1523664107   // [hetus] TODO: update
-#define SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT              1523664107   // [hetus] TODO: update
+#define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT_DEFAULT       1523923283   // [methuse] TODO: update
+#define SPORK_2_INSTANTX_DEFAULT                              1523664107   // [methuse] TODO: update
+#define SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT              1523664107   // [methuse] TODO: update
 #define SPORK_5_MAX_VALUE_DEFAULT                             10000        // 10000 SAP
-#define SPORK_7_MASTERNODE_SCANNING_DEFAULT                   1523664107   // [hetus] TODO: update
+#define SPORK_7_MASTERNODE_SCANNING_DEFAULT                   1523664107   // [methuse] TODO: update
 
 class CSporkMessage;
 class CSporkManager;

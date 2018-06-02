@@ -18,7 +18,7 @@
 #include <vector> //
 #include "masternode.h"
 
-//[hetus] calibrate masternode collateral
+//[methuse] calibrate masternode collateral
 static const int MASTERNODEAMOUNT = 9600;
 
 // Responsible for activating the Masternode and pinging the network

@@ -148,7 +148,7 @@ UniValue getnewaddress(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_WALLET_KEYPOOL_RAN_OUT, "Error: Keypool ran out, please call keypoolrefill first");
     CKeyID keyID = newKey.GetID();
 
-    // LogPrintf("\n[hetus] keyid is: %s", keyID.ToString());
+    // LogPrintf("\n[methuse] keyid is: %s", keyID.ToString());
 
     pwalletMain->SetAddressBook(keyID, strAccount, "receive");
 

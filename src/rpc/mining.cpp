@@ -781,7 +781,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         ExtractDestination(pblock->payee, address1);
         CMethuselahAddress address2(address1);
         result.push_back(Pair("payee", address2.ToString().c_str()));
-        //TODO: [hetus] dynamic masternode flow will screw with this call - point-in-time variation
+        //TODO: [methuse] dynamic masternode flow will screw with this call - point-in-time variation
         result.push_back(Pair("payee_amount",
            (int64_t)GetMasternodePayment(pindexPrev->nHeight+1, pblock->vtx[0]->GetValueOut() * 0.95, consensusParams)));
     } else {

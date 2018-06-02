@@ -281,8 +281,8 @@ public:
 
         // vSeeds.push_back(CDNSSeedData("methuselahcoin.io", "test-seed1.methuselahcoin.io"));
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
-        vFixedSeeds.clear(); // [hetus] TODO: remove
-        vSeeds.clear(); // [hetus] TODO: remove
+        vFixedSeeds.clear(); // [methuse] TODO: remove
+        vSeeds.clear(); // [methuse] TODO: remove
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,110); // m
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,128); // t

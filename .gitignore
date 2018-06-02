@@ -113,4 +113,3 @@ src/primitives/*.lo
 src/script/*.lo
 
 .vscode/
-hetus/
