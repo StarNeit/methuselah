@@ -609,12 +609,13 @@ void ReadConfigFile(const std::string& confPath)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good()){
-		/**TODO-- */
-        // Create empty methuselah.conf if it does not excist
-        //FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
-        //if (configFile != NULL)
-            //fclose(configFile);
-        return; // Nothing to read, so just return //return; // No methuselah.conf file is OK
+		// [hetus] FIX: Create empty methuselah.conf if it does not excist
+        FILE* configFile = fopen(GetConfigFile(confPath).string().c_str(), "a");
+        if (configFile != NULL) {
+            fclose(configFile);
+            streamConfig = GetConfigFile(confPath);
+        }
+        return;
     }
         
 
