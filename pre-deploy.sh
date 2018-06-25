@@ -6,7 +6,7 @@ mkdir -p $OUTDIR/bin
 ARCHIVE_CMD="zip"
 
 if [[ $HOST = "i686-w64-mingw32" ]]; then
-  ARCHIVE_NAME="windows-x86.zip"
+    ARCHIVE_NAME="windows-x86.zip"
 elif [[ $HOST = "x86_64-w64-mingw32" ]]; then
     ARCHIVE_NAME="windows-x64.zip"
 elif [[ $HOST = "arm-linux-gnueabihf" ]]; then
