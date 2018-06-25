@@ -16,7 +16,7 @@ env:
     - CCACHE_COMPRESS=1
     - MAKEJOBS="-j4"
     - BASE_OUTDIR=$TRAVIS_BUILD_DIR/out
-    - BASE_PACKAGES="zlib1g-dev zip git build-essential libtool autotools-dev automake pkg-config bsdmainutils curl libdb++-dev libdb4.8-dev libdb4.8++-dev"
+    - BASE_PACKAGES="zlib1g-dev zip git build-essential libtool autotools-dev automake pkg-config bsdmainutils curl libdb++-dev"
   matrix:
 # ARM32
     - HOST=arm-linux-gnueabihf PACKAGES="g++-arm-linux-gnueabihf" OPT="NO_QT=1" CONF="--without-gui"
