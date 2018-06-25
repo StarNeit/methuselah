@@ -58,7 +58,6 @@ deploy:
   file: out/**/zip/*
   api_key:
     secure: b9zII6FoG6BJhi1Dg32Or+9hITfSXYUOLlOf3v+q5e3t8HluktBpIkajI8hLY7VJAzMmmDJ+zzdnQCFAHe5BfjPJjU7q8TsLYL4xH8mMR5U06om4Ns7Mt5MjzDoKsHP0t/+fYWNJIWGaC0pr2mY7CZG5NfSbRoV7Q/xO1Ujx+lszEqcs78bPBT9/cjDxW398f/dqxlFzOb+sX7QqXbbsbaLbmcT+60bhLMH0SGw4HAKAOlxmmR/y+7ic+2EZe1UXTuoZY5xBnjVrd6Kid8cz1UGzzYGk1N6Sc7wH/Xg6QAi+JBD1NFIJiembhVEs1vLQUOa/C+eCeRT11KOVMo2fRsNuRNT2DgJ8jNWRy/2MgJ59kheDqDTHkeMul1fTW5K3qHEYZ0lDUYy8DdoagoN6EPpJfjQVg/OQSwoLz+4jZfSsrVH/vAoEuP4cDEsZUkQ/aXmtxKMOhkeUrf9gV/Yn2CENsf5Yp6QK8BXdS+Rp6Fdkzga12RVCgFcLMYJ61k50f8Bav15eP7piEpTX7NmfpqjLtWjlzEcUZqhkwPWr1+vKkaQsARb7RMPwfP4F7j3fYzGXweY2lbIXYmaYD3EVNFlnltHcC1WpMzAnbrgDalaIDE1n3KstpLzZKTRF840uGS0OGQBOkqxnGgPyLgExpKO0OL693ebwjsSQWak4n+U=
-  file: methuselah-test-1.1.0.0-*
   skip_cleanup: true
   on:
     repo: methuselahdev/methuselah
