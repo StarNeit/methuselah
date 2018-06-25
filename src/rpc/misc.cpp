@@ -151,20 +151,24 @@ public:
     }
 };
 #endif
-/**TODO --begin
 /*
     Used for updating/reading spork settings on the network
 */
+// [methuse] FIX: added spork rpc return for active & show.
 UniValue spork(const JSONRPCRequest& request)
 {
-    if(request.params.size() == 1 && request.params[0].get_str() == "show"){
-        std::map<int, CSporkMessage>::iterator it = mapSporksActive.begin();
-
-        //Object ret;
+    if (request.params.size() == 1 && request.params[0].get_str() == "show"){
 		UniValue ret(UniValue::VOBJ);
-        while(it != mapSporksActive.end()) {
-            ret.push_back(Pair(sporkManager.GetSporkNameByID(it->second.nSporkID), it->second.nValue));
-            it++;
+        for (int i = SPORK_START; i <= SPORK_END; i++) {
+            if (sporkManager.GetSporkNameByID(i) != "Unknown")
+                ret.push_back(Pair(sporkManager.GetSporkNameByID(i), GetSporkValue(i)));
+        }
+        return ret;
+    } else if (request.params.size() == 1 && request.params[0].get_str() == "active"){
+		UniValue ret(UniValue::VOBJ);
+        for (int i = SPORK_START; i <= SPORK_END; i++) {
+            if (sporkManager.GetSporkNameByID(i) != "Unknown")
+                ret.push_back(Pair(sporkManager.GetSporkNameByID(i), IsSporkActive(i)));
         }
         return ret;
     } else if (request.params.size() == 2){
@@ -174,7 +178,7 @@ UniValue spork(const JSONRPCRequest& request)
         }
 
         // SPORK VALUE
-        int64_t nValue = stoi(request.params[1].get_str());
+        int64_t nValue = stoull(request.params[1].get_str());
 		//TODO: Add core method.
 
         //broadcast new spork
@@ -190,11 +194,10 @@ UniValue spork(const JSONRPCRequest& request)
 
     throw runtime_error(
         "spork <name> [<value>]\n"
-        "<name> is the corresponding spork name, or 'show' to show all current spork settings"
+        "<name> is the corresponding spork name, 'active', or 'show' to show all current spork settings"
         "<value> is a epoch datetime to enable or disable spork"
         + HelpRequiringPassphrase());
 }
-//TODO-- ends
 
 
 UniValue validateaddress(const JSONRPCRequest& request)

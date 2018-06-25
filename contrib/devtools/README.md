@@ -178,3 +178,17 @@ It will do the following automatically:
 - add missing translations to the build system (TODO)
 
 See doc/translation-process.md for more information.
+
+pk-to-wif.py
+======================
+
+Convert a private key to wallet import format (WIF).
+
+Parameters:
+- `SECRET_KEY` - the base58 secret key value
+- `PRIVATE_KEY` - the private key to convert
+
+Example:
+```
+./contrib/devtools/pk-to-wif.py "ef" "f64122afa80afd9c7ce00ac41fed2f32838d8375c876f3e747f78affe22e1db0"
+```

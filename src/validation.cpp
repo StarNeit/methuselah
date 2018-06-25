@@ -3275,7 +3275,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
     if (chainActive.Tip() != NULL) {
         MasternodePayments = chainActive.Tip()->nHeight >= consensusParams.MasternodePaymentStartHeight;
     }
-
+ 
     if(MasternodePayments) {
         LOCK2(cs_main, mempool.cs);
 
@@ -3283,22 +3283,28 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
         if(pindex != NULL) {
             if(pindex->GetBlockHash() == block.hashPrevBlock) {
-                CAmount tVal = GetBlockSubsidy(pindex->nHeight+1, consensusParams) * 0.05;
-                CAmount nValue = block.vtx[0]->GetValueOut() - tVal;
-                CAmount masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, nValue, consensusParams);
-
                 // If we don't already have its previous block, skip masternode payment step
                 if (!IsInitialBlockDownload())
                 {
+                    CAmount tVal = GetBlockSubsidy(pindex->nHeight+1, consensusParams) * 0.05;
+                    CAmount nValue = block.vtx[0]->GetValueOut() - tVal;
+                    CAmount masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, nValue, consensusParams);
+
+                    bool isLockdown = IsSporkActive(SPORK_8_LOCKDOWN);
+
+                    // [methuse] FIX: if lockdown spork is active adjust amounts.
+                    if (isLockdown) {
+                        tVal = GetBlockSubsidy(pindex->nHeight+1, consensusParams);
+                        masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, tVal, consensusParams);
+                    }
+
                     bool foundPaymentAmount = false;
                     bool foundPayee = false;
                     bool foundPaymentAndPayee = false;
 
                     CScript payee;
 
-                    if(!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)
-                            || payee == CScript()) {
-
+                    if(!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)|| payee == CScript()) {
                         foundPayee = true; //doesn't require a specific payee
                         foundPaymentAmount = true;
                         foundPaymentAndPayee = true;
@@ -3310,8 +3316,9 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     BOOST_FOREACH(const CTxOut& output, tx.vout) {
                         //REV1 allows for continuous mn payments - not a discrete function
-                        if (output.scriptPubKey == payee &&
-                                output.nValue <= nValue * 0.6) {
+                        // [methuse] FIX: is not in lockdown then allow incorrect check to
+                        // allow for backwards compatability. 
+                        if (!isLockdown && output.scriptPubKey == payee && output.nValue <= nValue * 0.6) {
                             foundPaymentAndPayee = true;
                             break;
                         }
@@ -3333,6 +3340,10 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CTxDestination address1;
                     ExtractDestination(payee, address1);
                     CMethuselahAddress address2(address1);
+
+                    // [methuse] FIX: if amount and payee are found update flag.
+                    if (foundPayee && foundPaymentAmount)
+                        foundPaymentAndPayee = true;
 
                     if(!foundPaymentAndPayee) {
                         LogPrintf("CheckBlock() : *** CheckBlock() : couldn't find masternode payment[%d|%d] or payee[%d|%s] nHeight %d. \n", foundPaymentAmount, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);

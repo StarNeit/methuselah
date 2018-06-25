@@ -19,6 +19,11 @@
 using namespace std;
 using namespace boost;
 
+// Used for displaying of sporks.
+// TODO: Updated when sporks are added.
+#define SPORK_START 10000
+#define SPORK_END   10007
+
 // Don't ever reuse these IDs for other sporks
 #define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT               10000
 #define SPORK_2_INSTANTX                                      10001
@@ -27,12 +32,14 @@ using namespace boost;
 #define SPORK_5_MAX_VALUE                                     10004
 #define SPORK_6_NOTUSED                                       10005
 #define SPORK_7_MASTERNODE_SCANNING                           10006
+#define SPORK_8_LOCKDOWN                                      10007
 
 #define SPORK_1_MASTERNODE_PAYMENTS_ENFORCEMENT_DEFAULT       1523923283   // [methuse] TODO: update
 #define SPORK_2_INSTANTX_DEFAULT                              1523664107   // [methuse] TODO: update
 #define SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT              1523664107   // [methuse] TODO: update
 #define SPORK_5_MAX_VALUE_DEFAULT                             10000        // 10000 SAP
 #define SPORK_7_MASTERNODE_SCANNING_DEFAULT                   1523664107   // [methuse] TODO: update
+#define SPORK_8_LOCKDOWN_DEFAULT                              4070908800   // [methuse] FIX: lockdown, 01/01/2099
 
 class CSporkMessage;
 class CSporkManager;
@@ -104,8 +111,8 @@ private:
 
 public:
     CSporkManager() {
-        strMainPubKey = "04e6af2d104e5a082806154edf96310de550766b32150c8c25fff172fe4d17db3ceb72f2b055d42298c9a8c1fe2497fb7af7bf1ff10e68cbf7bf571e225dd8b83d"; 
-        strTestPubKey = "04180725b0bd97fbb42355cfa4585b549077ec30712961c1efc0d3595bb4a4bf80153dbf451079f93f0e4c5139bcac144cd99b967e340a6b10ccdc1045639fb62a";  
+        strMainPubKey = "04352c3399df0d8ec510f66aef12839689e1f7cfb2794c05209d2ed7723bd1be5a4e61540606343d1dffb6b6ae5d567a7ecf3c1d6854cb144fd06f06d170a41fad"; 
+        strTestPubKey = "0470ad8caf90ff3f41fb5d1ce91db4b701a20259c9d5723d9a63ebc735f460f2938aebfdcfa2b035ca7edf095c9d3d66df17ed0a840de40bc80402d2e9eafda4f5";  
     }
 
     std::string GetSporkNameByID(int id);
