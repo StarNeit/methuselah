@@ -36,6 +36,7 @@ before_install:
 install:
     - sudo add-apt-repository -y ppa:bitcoin/bitcoin
     - sudo apt-get update
+    - travis_retry sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
     - travis_retry sudo apt-get install --no-install-recommends --no-upgrade -qq $BASE_PACKAGES
     - if [ -n "$PACKAGES" ]; then travis_retry sudo apt-get install --no-install-recommends --no-upgrade -qq $PACKAGES; fi
 before_script:
