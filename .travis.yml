@@ -14,9 +14,9 @@ env:
     - CCACHE_SIZE=1G
     - CCACHE_TEMPDIR=/tmp/.ccache-temp
     - CCACHE_COMPRESS=1
-    - MAKEJOBS="-j2"
+    - MAKEJOBS="-j4"
     - BASE_OUTDIR=$TRAVIS_BUILD_DIR/out
-    - BASE_PACKAGES="zlib1g-dev zip git build-essential libtool autotools-dev automake pkg-config bsdmainutils curl"
+    - BASE_PACKAGES="zlib1g-dev zip git build-essential libtool autotools-dev automake pkg-config bsdmainutils curl libdb++-dev "
   matrix:
 # ARM32
     - HOST=arm-linux-gnueabihf PACKAGES="g++-arm-linux-gnueabihf" OPT="NO_QT=1" CONF="--without-gui"
