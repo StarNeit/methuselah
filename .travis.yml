@@ -47,7 +47,7 @@ before_script:
 script:
     - OUTDIR=$BASE_OUTDIR/$HOST
     - ./autogen.sh
-    - cd depends && make $MAKEJOBS $OPT
+    - cd depends && make $MAKEJOBS $OPT HOST=$HOST
     - cd $TRAVIS_BUILD_DIR && ./configure --prefix=$TRAVIS_BUILD_DIR/depends/$HOST $CONF
     - make $MAKEJOBS
     - sudo make install
