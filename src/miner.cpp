@@ -195,8 +195,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
 
     // start masternode payments
-    bool bMasterNodePayment = 
-        pindexPrev->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight;
+    bool bMasterNodePayment = pindexPrev->nHeight >= chainparams.GetConsensus().MasternodePaymentStartHeight;
 
 	if(bMasterNodePayment) {
         bool hasPayment = true;
@@ -228,7 +227,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 	CAmount blockValue = GetBlockSubsidy(pindexPrev->nHeight + 1, Params().GetConsensus());
 
 	blockValue += nFees;
-    CAmount masternodePayment = GetMasternodePayment(pindexPrev->nHeight+1, blockValue, Params().GetConsensus());
+    CAmount masternodePayment = GetMasternodePayment(pindexPrev->nHeight + 1, blockValue, Params().GetConsensus());
 
     //create masternode payment
     if(payments >= 2){
