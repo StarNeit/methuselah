@@ -1,7 +1,8 @@
 #!/bin/bash
 
-OUTDIR=$TRAVIS_BUILD_DIR/out/$TRAVIS_PULL_REQUEST/$TRAVIS_JOB_NUMBER-$HOST
-mkdir -p $OUTDIR/bin
+INSTALL_DIR=/usr/local/bin
+OUTDIR=$TRAVIS_BUILD_DIR/bin/$HOST
+mkdir -p $OUTDIR
 
 ARCHIVE_CMD="zip"
 
@@ -22,13 +23,13 @@ elif [[ $HOST = "x86_64-apple-darwin11" ]]; then
     ARCHIVE_NAME="osx-x64.zip"
 fi
 
-cp $TRAVIS_BUILD_DIR/src/qt/methuselah-qt $OUTDIR/bin/ || cp $TRAVIS_BUILD_DIR/src/qt/methuselah-qt.exe $OUTDIR/bin/ || echo "no QT Wallet"
-cp $TRAVIS_BUILD_DIR/src/methuselahd $OUTDIR/bin/ || cp $TRAVIS_BUILD_DIR/src/methuselahd.exe $OUTDIR/bin/
-cp $TRAVIS_BUILD_DIR/src/methuselah-cli $OUTDIR/bin/ || cp $TRAVIS_BUILD_DIR/src/methuselah-cli.exe $OUTDIR/bin/
-strip "$OUTDIR/bin"/* || echo "nothing to strip"
-ls -lah $OUTDIR/bin
+cp $INSTALL_DIR/methuselah-qt $OUTDIR || cp $INSTALL_DIR/methuselah-qt.exe $OUTDIR || echo "no QT Wallet"
+cp $INSTALL_DIR/methuselahd $OUTDIR || cp $INSTALL_DIR/methuselahd.exe $OUTDIR
+cp $INSTALL_DIR/methuselah-cli $OUTDIR || cp $INSTALL_DIR/methuselah-cli.exe $OUTDIR
+strip "$OUTDIR"/* || echo "nothing to strip"
+ls -lah $OUTDIR
 
-cd $OUTDIR/bin
+cd $OUTDIR
 ARCHIVE_CMD="$ARCHIVE_CMD $ARCHIVE_NAME *"
 eval $ARCHIVE_CMD
 
