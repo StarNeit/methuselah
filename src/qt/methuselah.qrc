@@ -72,9 +72,7 @@
         <file alias="drkblue_rightArrow_small">res/images/drkblue_rightArrow_small.png</file>
         <file alias="drkblue_qtreeview_selected">res/images/drkblue_qtreeview_selected.png</file>
         <file alias="methuselah_main_hg">res/images/methuselah_main_hg.png</file>
-        <file alias="methuselah_theme1_hg">res/images/methuselah_theme1_hg.png</file>
-		<file alias="methuselah_theme2_hg">res/images/methuselah_theme2_hg.png</file>
-		<file alias="methuselah_theme3_hg">res/images/methuselah_theme3_hg.png</file>
+        <file alias="methuselah-tree">res/images/methuselah-tree.png</file>
         <file alias="splash">res/images/splash.png</file>
         <file alias="splash_testnet">res/images/splash_testnet.png</file>
         <file alias="paper_wallet">res/images/paper_wallet.png</file>

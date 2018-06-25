@@ -3,7 +3,7 @@
 */
 
 WalletFrame {
-    border-image: url(':/images/methuselah_theme2_hg') 0 0 0 0 stretch stretch;
+    border-image: url(':/images/methuselah-tree') 0 0 0 0 stretch stretch;
     border-top:0px solid #000000;
     margin:0;
     padding:0;

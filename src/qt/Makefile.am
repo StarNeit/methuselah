@@ -305,9 +305,7 @@ RES_IMAGES = \
   res/images/drkblue_rightArrow_small.png \
   res/images/drkblue_qtreeview_selected.png \
   res/images/methuselah_main_hg.png \
-  res/images/methuselah_theme1_hg.png \
-  res/images/methuselah_theme2_hg.png \
-  res/images/methuselah_theme3_hg.png
+  res/images/methuselah-tree.png
 
 RES_CSS = \
   res/css/default.css 
