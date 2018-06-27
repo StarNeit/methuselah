@@ -94,7 +94,7 @@ bool IsSporkActive(int nSporkID)
         if(nSporkID == SPORK_3_INSTANTX_BLOCK_FILTERING) r = SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT;
         if(nSporkID == SPORK_5_MAX_VALUE) r = SPORK_5_MAX_VALUE_DEFAULT;
         if(nSporkID == SPORK_7_MASTERNODE_SCANNING) r = SPORK_7_MASTERNODE_SCANNING_DEFAULT;
-        if(nSporkID == SPORK_8_LOCKDOWN_DEFAULT) r = SPORK_8_LOCKDOWN_DEFAULT;
+        if(nSporkID == SPORK_8_LOCKDOWN) r = SPORK_8_LOCKDOWN_DEFAULT;
 
         if(r == 0) LogPrintf("GetSpork::Unknown Spork %d\n", nSporkID);
     }

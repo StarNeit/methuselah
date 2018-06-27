@@ -3304,7 +3304,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     CScript payee;
 
-                    if(!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)|| payee == CScript()) {
+                    if(!isLockdown && !masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)|| payee == CScript()) {
                         foundPayee = true; //doesn't require a specific payee
                         foundPaymentAmount = true;
                         foundPaymentAndPayee = true;
@@ -3344,6 +3344,12 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     // [methuse] FIX: if amount and payee are found update flag.
                     if (foundPayee && foundPaymentAmount)
                         foundPaymentAndPayee = true;
+
+                    if (isLockdown) {
+                        if (tx.vout[0].nValue != (tVal - masternodePaymentAmount) || tx.vout[1].nValue != masternodePaymentAmount) {
+                            foundPaymentAndPayee = false;
+                        }
+                    }
 
                     if(!foundPaymentAndPayee) {
                         LogPrintf("CheckBlock() : *** CheckBlock() : couldn't find masternode payment[%d|%d] or payee[%d|%s] nHeight %d. \n", foundPaymentAmount, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
