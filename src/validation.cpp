@@ -3346,8 +3346,16 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         foundPaymentAndPayee = true;
 
                     if (isLockdown) {
+                        // Verify correct outputs.
+                        if (tx.vout.size() != 2) {
+                            foundPaymentAndPayee = false;
+                            LogPrintf("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size());
+                        }
+
+                        // Verify correct payments.
                         if (tx.vout[0].nValue != (tVal - masternodePaymentAmount) || tx.vout[1].nValue != masternodePaymentAmount) {
                             foundPaymentAndPayee = false;
+                            LogPrintf("CheckBlock() : vout[1]=%d vout[2]=%d\n", tx.vout[0].nValue, tx.vout[1].nValue);
                         }
                     }
 
