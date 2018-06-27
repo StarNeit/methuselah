@@ -1304,12 +1304,12 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             return false;
         }
 
-        if (nVersion < MIN_PEER_PROTO_VERSION)
+        if (nVersion < ActiveProtocol())
         {
             // disconnect from peers older than this proto version
             LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->id, nVersion);
             connman.PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PEER_PROTO_VERSION)));
+                               strprintf("Version must be %d or greater", ActiveProtocol())));
             pfrom->fDisconnect = true;
             return false;
         }
@@ -3321,6 +3321,14 @@ bool SendMessages(CNode* pto, CConnman& connman, const std::atomic<bool>& interr
         }
     }
     return true;
+}
+
+int ActiveProtocol()
+{
+    if (IsSporkActive(SPORK_9_ACTIVE_PROTOCOL))
+        return GetSporkValue(SPORK_9_ACTIVE_PROTOCOL);
+    
+    return MIN_PEER_PROTO_VERSION;
 }
 
 class CNetProcessingCleanup

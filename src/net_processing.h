@@ -66,4 +66,8 @@ bool ProcessMessages(CNode* pfrom, CConnman& connman, const std::atomic<bool>& i
  */
 bool SendMessages(CNode* pto, CConnman& connman, const std::atomic<bool>& interrupt);
 
+/** Get active protocol version */
+// [methuse] FIX: added protocol that can be handled by spork.
+int ActiveProtocol();
+
 #endif // METHUSELAH_NET_PROCESSING_H

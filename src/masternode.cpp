@@ -175,7 +175,7 @@ CMasternode::CMasternode()
     cacheInputAgeBlock = 0;
     unitTest = false;
     allowFreeTx = true;
-    protocolVersion = MIN_PEER_PROTO_VERSION;
+    protocolVersion = ActiveProtocol();
     nLastDsq = 0;
     donationAddress = CScript();
     donationPercentage = 0;

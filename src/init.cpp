@@ -1361,7 +1361,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
     }
 
     //ignore masternodes below protocol version
-    //nMasternodeMinProtocol = GetArg("-masternodeminprotocol", MIN_PEER_PROTO_VERSION);
+    //nMasternodeMinProtocol = GetArg("-masternodeminprotocol", ActiveProtocol());
 
     int64_t nStart;
 

@@ -3290,7 +3290,8 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CAmount nValue = block.vtx[0]->GetValueOut() - tVal;
                     CAmount masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, nValue, consensusParams);
 
-                    bool isLockdown = IsSporkActive(SPORK_8_LOCKDOWN);
+                    int lockdownHeight = GetSporkValue(SPORK_8_LOCKDOWN);
+                    bool isLockdown = IsSporkActive(SPORK_8_LOCKDOWN) && (pindex->nHeight+1) >= lockdownHeight;
 
                     // [methuse] FIX: if lockdown spork is active adjust amounts.
                     if (isLockdown) {
