@@ -21,13 +21,13 @@ endef
 
 define fetch_file
 (test -f $$($(1)_source_dir)/$(4) || \
-  ( mkdir -p $$($(1)_download_dir) && echo Fetching $(1)... && \
-  ( $(build_DOWNLOAD) "$$($(1)_download_dir)/$(4).temp" "$(2)/$(3)" || \
-    $(build_DOWNLOAD) "$$($(1)_download_dir)/$(4).temp" "$(FALLBACK_DOWNLOAD_PATH)/$(3)" ) && \
-    echo "$(5)  $$($(1)_download_dir)/$(4).temp" > $$($(1)_download_dir)/.$(4).hash && \
-    $(build_SHA256SUM) -c $$($(1)_download_dir)/.$(4).hash && \
-    mv $$($(1)_download_dir)/$(4).temp $$($(1)_source_dir)/$(4) && \
-    rm -rf $$($(1)_download_dir) ))
+	( mkdir -p $$($(1)_download_dir) && echo Fetching $(1)... && \
+	( $(build_DOWNLOAD) "$$($(1)_download_dir)/$(4).temp" "$(2)/$(3)" || \
+	$(build_DOWNLOAD) "$$($(1)_download_dir)/$(4).temp" "$(FALLBACK_DOWNLOAD_PATH)/$(3)" ) && \
+	echo "$(5)  $$($(1)_download_dir)/$(4).temp" > $$($(1)_download_dir)/.$(4).hash && \
+	$(build_SHA256SUM) -c $$($(1)_download_dir)/.$(4).hash && \
+	mv $$($(1)_download_dir)/$(4).temp $$($(1)_source_dir)/$(4) && \
+	rm -rf $$($(1)_download_dir) ))
 endef
 
 define int_get_build_recipe_hash
@@ -71,12 +71,12 @@ $(1)_download_path_fixed=$(subst :,\:,$$($(1)_download_path))
 
 #default commands
 $(1)_fetch_cmds ?= $(call fetch_file,$(1),$(subst \:,:,$$($(1)_download_path_fixed)),$$($(1)_download_file),$($(1)_file_name),$($(1)_sha256_hash))
-$(1)_extract_cmds ?= mkdir -p $$($(1)_extract_dir) && echo "$$($(1)_sha256_hash)  $$($(1)_source)" > $$($(1)_extract_dir)/.$$($(1)_file_name).hash &&  $(build_SHA256SUM) -c $$($(1)_extract_dir)/.$$($(1)_file_name).hash && tar --strip-components=1 -xf $$($(1)_source)
-$(1)_preprocess_cmds ?=
-$(1)_build_cmds ?=
-$(1)_config_cmds ?=
-$(1)_stage_cmds ?=
-$(1)_set_vars ?=
+	$(1)_extract_cmds ?= mkdir -p $$($(1)_extract_dir) && echo "$$($(1)_sha256_hash)  $$($(1)_source)" > $$($(1)_extract_dir)/.$$($(1)_file_name).hash &&  $(build_SHA256SUM) -c $$($(1)_extract_dir)/.$$($(1)_file_name).hash && tar --strip-components=1 -xf $$($(1)_source)
+	$(1)_preprocess_cmds ?=
+	$(1)_build_cmds ?=
+	$(1)_config_cmds ?=
+	$(1)_stage_cmds ?=
+	$(1)_set_vars ?=
 
 
 all_sources+=$$($(1)_fetched)
@@ -126,28 +126,28 @@ $(1)_config_env+=PKG_CONFIG_PATH=$($($(1)_type)_prefix)/share/pkgconfig
 $(1)_config_env+=PATH=$(build_prefix)/bin:$(PATH)
 $(1)_build_env+=PATH=$(build_prefix)/bin:$(PATH)
 $(1)_stage_env+=PATH=$(build_prefix)/bin:$(PATH)
-$(1)_autoconf=./configure --host=$($($(1)_type)_host) --disable-dependency-tracking --prefix=$($($(1)_type)_prefix) $$($(1)_config_opts) CC="$$($(1)_cc)" CXX="$$($(1)_cxx)"
+	$(1)_autoconf=./configure --host=$($($(1)_type)_host) --disable-dependency-tracking --prefix=$($($(1)_type)_prefix) $$($(1)_config_opts) CC="$$($(1)_cc)" CXX="$$($(1)_cxx)"
 
 ifneq ($($(1)_nm),)
-$(1)_autoconf += NM="$$($(1)_nm)"
+	$(1)_autoconf += NM="$$($(1)_nm)"
 endif
 ifneq ($($(1)_ranlib),)
-$(1)_autoconf += RANLIB="$$($(1)_ranlib)"
+	$(1)_autoconf += RANLIB="$$($(1)_ranlib)"
 endif
 ifneq ($($(1)_ar),)
-$(1)_autoconf += AR="$$($(1)_ar)"
+	$(1)_autoconf += AR="$$($(1)_ar)"
 endif
 ifneq ($($(1)_cflags),)
-$(1)_autoconf += CFLAGS="$$($(1)_cflags)"
+	$(1)_autoconf += CFLAGS="$$($(1)_cflags)"
 endif
 ifneq ($($(1)_cxxflags),)
-$(1)_autoconf += CXXFLAGS="$$($(1)_cxxflags)"
+	$(1)_autoconf += CXXFLAGS="$$($(1)_cxxflags)"
 endif
 ifneq ($($(1)_cppflags),)
-$(1)_autoconf += CPPFLAGS="$$($(1)_cppflags)"
+	$(1)_autoconf += CPPFLAGS="$$($(1)_cppflags)"
 endif
 ifneq ($($(1)_ldflags),)
-$(1)_autoconf += LDFLAGS="$$($(1)_ldflags)"
+	$(1)_autoconf += LDFLAGS="$$($(1)_ldflags)"
 endif
 endef
 
@@ -156,39 +156,39 @@ $($(1)_fetched):
 	$(AT)mkdir -p $$(@D) $(SOURCES_PATH)
 	$(AT)cd $$(@D); $(call $(1)_fetch_cmds,$(1))
 	$(AT)touch $$@
-$($(1)_extracted): | $($(1)_fetched)
+	$($(1)_extracted): | $($(1)_fetched)
 	$(AT)echo Extracting $(1)...
 	$(AT)mkdir -p $$(@D)
 	$(AT)cd $$(@D); $(call $(1)_extract_cmds,$(1))
 	$(AT)touch $$@
-$($(1)_preprocessed): | $($(1)_dependencies) $($(1)_extracted)
+	$($(1)_preprocessed): | $($(1)_dependencies) $($(1)_extracted)
 	$(AT)echo Preprocessing $(1)...
 	$(AT)mkdir -p $$(@D) $($(1)_patch_dir)
 	$(AT)$(foreach patch,$($(1)_patches),cd $(PATCHES_PATH)/$(1); cp $(patch) $($(1)_patch_dir) ;)
 	$(AT)cd $$(@D); $(call $(1)_preprocess_cmds, $(1))
 	$(AT)touch $$@
-$($(1)_configured): | $($(1)_preprocessed)
+	$($(1)_configured): | $($(1)_preprocessed)
 	$(AT)echo Configuring $(1)...
 	$(AT)rm -rf $(host_prefix); mkdir -p $(host_prefix)/lib; cd $(host_prefix); $(foreach package,$($(1)_all_dependencies), tar xf $($(package)_cached); )
 	$(AT)mkdir -p $$(@D)
 	$(AT)+cd $$(@D); $($(1)_config_env) $(call $(1)_config_cmds, $(1))
 	$(AT)touch $$@
-$($(1)_built): | $($(1)_configured)
+	$($(1)_built): | $($(1)_configured)
 	$(AT)echo Building $(1)...
 	$(AT)mkdir -p $$(@D)
 	$(AT)+cd $$(@D); $($(1)_build_env) $(call $(1)_build_cmds, $(1))
 	$(AT)touch $$@
-$($(1)_staged): | $($(1)_built)
+	$($(1)_staged): | $($(1)_built)
 	$(AT)echo Staging $(1)...
 	$(AT)mkdir -p $($(1)_staging_dir)/$(host_prefix)
 	$(AT)cd $($(1)_build_dir); $($(1)_stage_env) $(call $(1)_stage_cmds, $(1))
 	$(AT)rm -rf $($(1)_extract_dir)
 	$(AT)touch $$@
-$($(1)_postprocessed): | $($(1)_staged)
+	$($(1)_postprocessed): | $($(1)_staged)
 	$(AT)echo Postprocessing $(1)...
 	$(AT)cd $($(1)_staging_prefix_dir); $(call $(1)_postprocess_cmds)
 	$(AT)touch $$@
-$($(1)_cached): | $($(1)_dependencies) $($(1)_postprocessed)
+	$($(1)_cached): | $($(1)_dependencies) $($(1)_postprocessed)
 	$(AT)echo Caching $(1)...
 	$(AT)cd $$($(1)_staging_dir)/$(host_prefix); find . | sort | tar --no-recursion -czf $$($(1)_staging_dir)/$$(@F) -T -
 	$(AT)mkdir -p $$(@D)
