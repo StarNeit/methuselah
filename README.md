@@ -66,7 +66,7 @@ __________________________________________________________________________
 - **Jooky - Marketing, Community Management**
 - **Theweakshall - Automation,  Development**
 - **Protoxylem - Project Management**
-- **Zeusofethereum - Branding, Design**
+- **Ren - Developer, Systems Engineer**
 
 __________________________________________________________________________
 
