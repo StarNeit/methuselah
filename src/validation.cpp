@@ -3347,7 +3347,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     if (isLockdown) {
                         // Verify correct outputs.
-                        if (tx.vout.size() != 2) {
+                        if (tx.vout.size() < 2) {
                             foundPaymentAndPayee = false;
                             LogPrintf("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size());
                         }
