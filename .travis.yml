@@ -32,6 +32,7 @@ deploy:
   file_blob: true  
   file: Methuselah-QT.dmg
   overwrite: true
+  draft: true
   on:
     repo: methuselahdev/methuselah
     branch: osx-build
