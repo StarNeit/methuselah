@@ -3307,7 +3307,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     const CTransaction &tx = *(block.vtx[0]);
 
                     // If not in lockdown then allow for no masternode payments.
-                    if (!isLockdown && !masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)|| payee == CScript()) {
+                    if (!isLockdown && (!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee) || payee == CScript())) {
                         foundPayee = true; //doesn't require a specific payee
                         foundPaymentAmount = true;
                         foundPaymentAndPayee = true;
