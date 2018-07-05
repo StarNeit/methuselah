@@ -3314,12 +3314,6 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         if(fDebug) LogPrintf("CheckBlock() : non-specific masternode payments %d\n", chainActive.Tip()->nHeight+1);
                     }
 
-                    // If in lockdown then make sure there are two payments that include
-                    // miner and masternode rewards.
-                    if (isLockdown && tx.vout.size() < 2) {
-                        return state.DoS(100, error("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size()));
-                    }
-
                     BOOST_FOREACH(const CTxOut& output, tx.vout) {
                         //REV1 allows for continuous mn payments - not a discrete function
                         // [methuse] FIX: is not in lockdown then allow incorrect check to
@@ -3332,11 +3326,13 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         // Make sure that at least 1 vout value equals masternode payment
                         // amount and make sure that it matches payee.
                         if (output.nValue == masternodePaymentAmount) {
-                            CTxDestination address1;
-                            ExtractDestination(output.scriptPubKey, address1);
-                            CMethuselahAddress address2(address1);
+                            if(fDebug) {
+                                CTxDestination address1;
+                                ExtractDestination(output.scriptPubKey, address1);
+                                CMethuselahAddress address2(address1);
 
-                            if(fDebug) LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
+                                LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
+                            }
 
                             foundPaymentAmount = true;
 
@@ -3354,6 +3350,12 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CTxDestination address1;
                     ExtractDestination(payee, address1);
                     CMethuselahAddress address2(address1);
+
+                    // If in lockdown then make sure there are two payments that include
+                    // miner and masternode rewards.
+                    if (isLockdown && tx.vout.size() < 2) {
+                        return state.DoS(100, error("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size()));
+                    }
 
                     // [methuse] FIX: if amount and payee are found update flag.
                     if (foundPayee && foundPaymentAmount)
