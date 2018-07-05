@@ -1375,7 +1375,7 @@ CAmount GetMasternodePayment(int nHeight, CAmount blockValue, const Consensus::P
 
     CAmount amount = blockValue * 0.5;
     
-    if (nHeight >= 1921 && nHeight <= 8960)
+    if (nHeight >= consensusParams.MasternodePaymentStartHeight && nHeight <= 8960)
         amount = blockValue * 0.3;
     else if (nHeight >= 8961 && nHeight <= 17920)
         amount = blockValue * 0.4;
