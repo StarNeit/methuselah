@@ -103,7 +103,7 @@ bool IsSporkActive(int nSporkID)
 
     // Special case for spork 8 to allow for blocks beyond current
     // date if needed.
-    if (nSporkID == SPORK_8_LOCKDOWN && r > 0 && r < 4070908800) {
+    if (nSporkID == SPORK_8_LOCKDOWN && r > 0 && r != 4070908800) {
         return true;
     }
 
