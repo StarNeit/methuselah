@@ -3306,6 +3306,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CScript payee;
                     const CTransaction &tx = *(block.vtx[0]);
 
+                    // If not in lockdown then allow for no masternode payments.
                     if (!isLockdown && !masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee)|| payee == CScript()) {
                         foundPayee = true; //doesn't require a specific payee
                         foundPaymentAmount = true;
@@ -3353,7 +3354,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     // If in lockdown then make sure there are two payments that include
                     // miner and masternode rewards.
-                    if (isLockdown && tx.vout.size() < 2) {
+                    if (isLockdown && tx.vout.size() != 2) {
                         return state.DoS(100, error("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size()));
                     }
 
