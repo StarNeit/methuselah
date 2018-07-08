@@ -3354,8 +3354,8 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     // If in lockdown then make sure there are two payments that include
                     // miner and masternode rewards.
-                    if (isLockdown && tx.vout.size() != 2) {
-                        return state.DoS(100, error("CheckBlock() : coinbase transaction should have 2 outputs, size %d\n", tx.vout.size()));
+                    if (isLockdown && tx.vout.size() < 2) {
+                        return state.DoS(100, error("CheckBlock() : coinbase transaction should have at least 2 outputs, size %d\n", tx.vout.size()));
                     }
 
                     // [methuse] FIX: if amount and payee are found update flag.
