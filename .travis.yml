@@ -21,7 +21,7 @@ script:
 before_deploy:
 - git config --local user.name "methuselahdev"
 - git config --local user.email "methuselahdev@gmail.com"
-- git tag "methuselah-test-1.1.0.0"
+- git tag "methuselah-1.1.0.0"
 - echo `pwd`
 
 deploy:
@@ -35,4 +35,4 @@ deploy:
   draft: true
   on:
     repo: methuselahdev/methuselah
-    branch: osx-build
+    branch: master
