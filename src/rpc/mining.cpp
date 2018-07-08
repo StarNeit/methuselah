@@ -652,9 +652,12 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         entry.push_back(Pair("weight", GetTransactionWeight(tx)));
 
         if (tx.IsCoinBase()) {
+            /* [methuse] FIX: no treasury reward.
             if (tx.vout.size() > 1) {
                 entry.push_back(Pair("treasuryreward", (int64_t)tx.vout[1].nValue));
             }
+            */
+            entry.push_back(Pair("treasuryreward", 0));
             entry.push_back(Pair("required", true));
             txCoinbase = entry;
         } else {
@@ -782,15 +785,14 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         CMethuselahAddress address2(address1);
         result.push_back(Pair("payee", address2.ToString().c_str()));
         //TODO: [methuse] dynamic masternode flow will screw with this call - point-in-time variation
-        result.push_back(Pair("payee_amount",
-           (int64_t)GetMasternodePayment(pindexPrev->nHeight+1, pblock->vtx[0]->GetValueOut() * 0.95, consensusParams)));
+        // [methuse] FIX: remove treasury amount.
+        result.push_back(Pair("payee_amount", (int64_t)GetMasternodePayment(pindexPrev->nHeight+1, pblock->vtx[0]->GetValueOut(), consensusParams)));
     } else {
         result.push_back(Pair("payee", ""));
         result.push_back(Pair("payee_amount", ""));
     }
 
-    bool MasternodePayments =
-        pindexPrev->nHeight >= consensusParams.MasternodePaymentStartHeight;
+    bool MasternodePayments = pindexPrev->nHeight >= consensusParams.MasternodePaymentStartHeight;
 
     result.push_back(Pair("masternode_payments", MasternodePayments));
     result.push_back(Pair("enforce_masternode_payments", true));
@@ -1024,13 +1026,13 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() != 1)
         throw runtime_error(
             "getblocksubsidy height\n"
-            "\nReturns block subsidy reward, taking into account the treasury reward of block at index provided.\n"
+            "\nReturns block subsidy reward, taking into account the masternode reward of block at index provided.\n"
             "\nArguments:\n"
             "1. height         (numeric, optional) The block height.  If not provided, defaults to the current height of the chain.\n"
             "\nResult:\n"
             "{\n"
             "  \"miner\" : x.xxx           (numeric) The mining reward amount in " + CURRENCY_UNIT + ".\n"
-            "  \"treasury\" : x.xxx        (numeric) The treasury reward amount in " + CURRENCY_UNIT + ".\n"
+            "  \"masternode\" : x.xxx        (numeric) The masternode reward amount in " + CURRENCY_UNIT + ".\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("getblocksubsidy", "1000")
@@ -1040,22 +1042,21 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
     RPCTypeCheck(request.params, boost::assign::list_of(UniValue::VNUM));
 
     LOCK(cs_main);
-    int nHeight = (request.params.size()==1) ? 
-                    request.params[0].get_int() : chainActive.Height();
+    int nHeight = (request.params.size()==1) ? request.params[0].get_int() : chainActive.Height();
 
     if (nHeight < 0)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Block height out of range");
 
     CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-    CAmount nTreasuryReward = 0;
-    if (nHeight > 1) {
-        nTreasuryReward = nReward/20;
-        nReward -= nTreasuryReward;
+    // [methuse] FIX: changed to masternode.
+    CAmount nMasternodeReward = GetMasternodePayment(nHeight, nReward, Params().GetConsensus());
+    if (nHeight >= Params().GetConsensus().MasternodePaymentStartHeight) {
+        nReward -= nMasternodeReward;
     }
 
     UniValue result(UniValue::VOBJ);
     result.push_back(Pair("miner", ValueFromAmount(nReward)));
-    result.push_back(Pair("treasury", ValueFromAmount(nTreasuryReward)));
+    result.push_back(Pair("masternode", ValueFromAmount(nMasternodeReward)));
     return result;
 }
 
