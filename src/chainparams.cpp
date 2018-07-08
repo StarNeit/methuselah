@@ -168,7 +168,8 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
-                {     0, uint256S("00000de5cd174557ab559bb00ec27e1d0a323ea11fa1afd9d76d5e6f552cffb9")}
+                {     0, uint256S("00000de5cd174557ab559bb00ec27e1d0a323ea11fa1afd9d76d5e6f552cffb9")},
+                { 50900, uint256S("0000000000764b9d957d88a6307e7d87f083d102e23f3bd80458c53523631926")}
             }
         };
 
@@ -189,9 +190,9 @@ public:
         //     (the tx=... number in the SetBestChain debug.log lines)
         // [3] estimated number of transactions per second after that timestamp
         chainTxData = ChainTxData{
-            0,
-            0,
-            0
+            1531078381,
+            57241,
+            1
         };
     }
 };
