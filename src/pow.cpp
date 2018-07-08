@@ -65,7 +65,7 @@ static arith_uint256 ComputeTarget(const CBlockIndex *pindexFirst,
  */
 static const CBlockIndex *GetSuitableBlock(const CBlockIndex *pindex) {
     assert(pindex->nHeight >= 3);
-    LogPrintf("GetSuitableBlock nHeight: %d\n", pindex->nHeight);
+    //LogPrintf("GetSuitableBlock nHeight: %d\n", pindex->nHeight);
     /**
      * In order to avoid a block is a very skewed timestamp to have too much
      * influence, we select the median of the 3 top most blocks as a starting
@@ -75,7 +75,7 @@ static const CBlockIndex *GetSuitableBlock(const CBlockIndex *pindex) {
     blocks[2] = pindex;
     blocks[1] = pindex->pprev;
     blocks[0] = blocks[1]->pprev;
-    LogPrintf("1: %d 2: %d 3: %d\n", blocks[0]->nHeight, blocks[1]->nHeight, blocks[2]->nHeight);
+    //LogPrintf("1: %d 2: %d 3: %d\n", blocks[0]->nHeight, blocks[1]->nHeight, blocks[2]->nHeight);
     // Sorting network.
     if (blocks[0]->nTime > blocks[2]->nTime) {
         std::swap(blocks[0], blocks[2]);
@@ -109,7 +109,7 @@ uint32_t GetNextWorkRequiredD601(const CBlockIndex *pindexPrev,
 
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
     
-    LogPrintf("Retargeting with D601\n");
+    //LogPrintf("Retargeting with D601\n");
 
     // Genesis block
     if (pindexPrev == NULL)
@@ -126,7 +126,7 @@ uint32_t GetNextWorkRequiredD601(const CBlockIndex *pindexPrev,
 
     // Compute the difficulty based on the full adjustement interval.
     const uint32_t nHeight = pindexPrev->nHeight;
-    LogPrintf("nHeight: %d AdjustmentInterval: %d\n",nHeight, params.DifficultyAdjustmentInterval());
+    //LogPrintf("nHeight: %d AdjustmentInterval: %d\n",nHeight, params.DifficultyAdjustmentInterval());
     assert(nHeight >= params.DifficultyAdjustmentInterval());
 
     // Get the last suitable block of the difficulty interval.
@@ -135,7 +135,7 @@ uint32_t GetNextWorkRequiredD601(const CBlockIndex *pindexPrev,
 
     // Get the first suitable block of the difficulty interval.
     uint32_t nHeightFirst = nHeight - 12;
-    LogPrintf("nHeight: %d nHeightFirst: %d\n", nHeight, nHeightFirst);
+    //LogPrintf("nHeight: %d nHeightFirst: %d\n", nHeight, nHeightFirst);
     const CBlockIndex *pindexFirst =
         GetSuitableBlock(pindexPrev->GetAncestor(nHeightFirst));
     assert(pindexFirst);
@@ -166,10 +166,10 @@ unsigned int ZMDS(arith_uint256 bnAvg,
     // Use medians to prevent time-warp attacks
     int64_t nActualTimespan = nLastBlockTime - nFirstBlockTime;
 
-    LogPrint("pow", "  nActualTimespan = %d  before dampening\n", nActualTimespan);
+    //LogPrint("pow", "  nActualTimespan = %d  before dampening\n", nActualTimespan);
     //nActualTimespan = params.AveragingWindowTimespan() + (nActualTimespan - params.AveragingWindowTimespan())/4;
     nActualTimespan = 1.05 * nActualTimespan;
-    LogPrint("pow", "  nActualTimespan = %d  before bounds\n", nActualTimespan);
+    //LogPrint("pow", "  nActualTimespan = %d  before bounds\n", nActualTimespan);
 
     if (nActualTimespan < params.MinActualTimespan())
         nActualTimespan = params.MinActualTimespan();
@@ -186,10 +186,10 @@ unsigned int ZMDS(arith_uint256 bnAvg,
         bnNew = bnPowLimit;
 
     /// debug print
-    LogPrint("pow", "GetNextWorkRequired RETARGET\n");
-    LogPrint("pow", "params.AveragingWindowTimespan() = %d    nActualTimespan = %d\n", params.AveragingWindowTimespan(), nActualTimespan);
-    LogPrint("pow", "Current average: %08x  %s\n", bnAvg.GetCompact(), bnAvg.ToString());
-    LogPrint("pow", "After:  %08x  %s\n", bnNew.GetCompact(), bnNew.ToString());
+    //LogPrint("pow", "GetNextWorkRequired RETARGET\n");
+    //LogPrint("pow", "params.AveragingWindowTimespan() = %d    nActualTimespan = %d\n", params.AveragingWindowTimespan(), nActualTimespan);
+    //LogPrint("pow", "Current average: %08x  %s\n", bnAvg.GetCompact(), bnAvg.ToString());
+    //LogPrint("pow", "After:  %08x  %s\n", bnNew.GetCompact(), bnNew.ToString());
 
     return bnNew.GetCompact();
 }

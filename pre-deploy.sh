@@ -37,10 +37,10 @@ mkdir -p $OUTDIR/zip
 mv $ARCHIVE_NAME $OUTDIR/zip
 
 echo "Install: $INSTALL"
-echo ls $INSTALL
+ls -lah $INSTALL
 echo "Output: $OUTDIR"
-echo ls $OUTDIR
+ls -lah $OUTDIR
 echo "Archives: $OUTDIR/zip"
-echo ls $OUTDIR/zip
+ls -lah $OUTDIR/zip
 
 sleep $[ ( $RANDOM % 6 )  + 1 ]s

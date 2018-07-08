@@ -597,7 +597,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
             return;
         }
 
-        if(protocolVersion < MIN_PEER_PROTO_VERSION) {
+        if(protocolVersion < ActiveProtocol()) {
             LogPrintf("dsee - ignoring outdated Masternode %s protocol version %d\n", vin.ToString().c_str(), protocolVersion);
             return;
         }
@@ -785,7 +785,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
 
         // see if we have this Masternode
         CMasternode* pmn = this->Find(vin);
-        if(pmn != NULL && pmn->protocolVersion >= MIN_PEER_PROTO_VERSION)
+        if(pmn != NULL && pmn->protocolVersion >= ActiveProtocol())
         {
             //LogPrintf("dseep - Found corresponding mn for vin: %s\n", vin.ToString().c_str());
 
