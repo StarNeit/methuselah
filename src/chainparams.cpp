@@ -219,8 +219,8 @@ public:
         consensus.nPowMaxAdjustDown = 31; // Zawy adjustment: (1 - 1/0.765)x100 (0.765 = v1b)
         consensus.nPowMaxAdjustUp = 23.7; // Zawy adjustment: 1- 1/(1+.31)x100 = 23.7
 
-        consensus.nPowTargetTimespan = 10; // 10 seconds
-        consensus.nPowTargetSpacing = 10; // 10 seconds 
+        consensus.nPowTargetTimespan = 5; // 5 seconds
+        consensus.nPowTargetSpacing = 5; // 5 seconds 
 
         consensus.fPowD601SwitchHeight = 30;
 
@@ -265,7 +265,7 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0");
 
-        consensus.MasternodePaymentStartHeight = 500;
+        consensus.MasternodePaymentStartHeight = 250;
 
         pchMessageStart[0] = 0xba;
         pchMessageStart[1] = 0xbb;
