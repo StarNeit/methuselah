@@ -3306,11 +3306,13 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CScript payee;
                     const CTransaction &tx = *(block.vtx[0]);
 
-                    // If not in lockdown then allow for no masternode payments.
-                    if (!isLockdown && (!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee) || payee == CScript())) {
-                        foundPayee = true; //doesn't require a specific payee
-                        foundPaymentAmount = true;
-                        foundPaymentAndPayee = true;
+                    if (!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee) || payee == CScript()) {
+                        // If not in lockdown then allow for no masternode payments.
+                        if (!isLockdown) {
+                            foundPayee = true; //doesn't require a specific payee
+                            foundPaymentAmount = true;
+                            foundPaymentAndPayee = true;
+                        }
 
                         if(fDebug) LogPrintf("CheckBlock() : non-specific masternode payments %d\n", chainActive.Tip()->nHeight+1);
                     }

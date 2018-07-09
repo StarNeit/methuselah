@@ -658,7 +658,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             }
             */
             entry.push_back(Pair("treasuryreward", 0));
-            entry.push_back(Pair("required", true));
+            entry.push_back(Pair("required", false));
             txCoinbase = entry;
         } else {
             transactions.push_back(entry);
