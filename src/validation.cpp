@@ -3306,7 +3306,9 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     CScript payee;
                     const CTransaction &tx = *(block.vtx[0]);
 
-                    if (!masternodePayments.GetBlockPayee(chainActive.Tip()->nHeight+1, payee) || payee == CScript()) {
+                    bool foundMasternodePayee = masternodePayments.GetBlockPayee(pindex->nHeight+1, payee);
+
+                    if (!foundMasternodePayee || payee == CScript()) {
                         // If not in lockdown then allow for no masternode payments.
                         if (!isLockdown) {
                             foundPayee = true; //doesn't require a specific payee
@@ -3314,7 +3316,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                             foundPaymentAndPayee = true;
                         }
 
-                        if(fDebug) LogPrintf("CheckBlock() : non-specific masternode payments %d\n", chainActive.Tip()->nHeight+1);
+                        if(fDebug) LogPrintf("CheckBlock() : non-specific masternode payments %d\n", pindex->nHeight+1);
                     }
 
                     BOOST_FOREACH(const CTxOut& output, tx.vout) {
@@ -3334,15 +3336,27 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                                 ExtractDestination(output.scriptPubKey, address1);
                                 CMethuselahAddress address2(address1);
 
-                                LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
+                                LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), pindex->nHeight+1);
                             }
 
                             foundPaymentAmount = true;
 
+                            CTxDestination a1;
+                            ExtractDestination(output.scriptPubKey, a1);
+                            CMethuselahAddress a2(a1);
+                            CTxDestination b1;
+                            ExtractDestination(output.scriptPubKey, b1);
+                            CMethuselahAddress b2(b1);
+
                             // During lockdown we want to make sure that the masternode payment
                             // amount and payee match.
-                            if (isLockdown && output.scriptPubKey == payee)
+                            if (isLockdown && a2 == b2) {
                                 foundPayee = true;
+                            }
+                            // If not a match and debug then log it.
+                            else if (isLockdown && fDebug) { 
+                                LogPrintf("No match: output.scriptPubKey=%s payee=%s same=%s\n", a2.ToString().c_str(), b2.ToString().c_str(), (a2 == b2 ? "Y" : "N"));
+                            }
                         }
 
                         // This is only ok before lockdown.
@@ -3370,7 +3384,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                                 CTxDestination addr1;
                                 ExtractDestination(output.scriptPubKey, addr1);
                                 CMethuselahAddress addr2(addr1);
-                                LogPrintf("\tHeight: %d Value: %d Payee: %s Masternode: %s\n", chainActive.Tip()->nHeight+1, output.nValue, addr2.ToString().c_str(), address2.ToString().c_str());
+                                LogPrintf("\tHeight: %d Value: %d output.scriptPubKey: %s payee: %s\n", chainActive.Tip()->nHeight+1, output.nValue, addr2.ToString().c_str(), address2.ToString().c_str());
                             }
                         }
                         LogPrintf("CheckBlock() : *** CheckBlock() : couldn't find masternode payment[%d|%d] or payee[%d|%s] nHeight %d. \n", foundPaymentAmount, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
