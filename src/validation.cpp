@@ -3295,8 +3295,9 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
                     // [methuse] FIX: if lockdown spork is active adjust amounts.
                     if (isLockdown) {
-                        tVal = GetBlockSubsidy(pindex->nHeight+1, consensusParams);
-                        masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, tVal, consensusParams);
+                        tVal = 0;
+                        nValue = block.vtx[0]->GetValueOut();
+                        masternodePaymentAmount = GetMasternodePayment(pindex->nHeight+1, nValue, consensusParams);
                     }
 
                     bool foundPaymentAmount = false;
@@ -3328,18 +3329,12 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                             break;
                         }
 
-                        if (!isLockdown && output.scriptPubKey == payee)
+                        if (output.scriptPubKey == payee)
                             foundPayee = true;
 
                         // Make sure that at least 1 vout value equals masternode payment
                         // amount and make sure that it matches payee.
                         if (output.nValue == masternodePaymentAmount) {
-                            // During lockdown we want to make sure that the masternode payment
-                            // amount and payee match.
-                            if (isLockdown && output.scriptPubKey == payee) {
-                                foundPayee = true;
-                            }
-
                             foundPaymentAmount = true;
 
                             if(fDebug) {
