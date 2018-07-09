@@ -3304,14 +3304,13 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                     bool foundPaymentAndPayee = false;
 
                     CScript payee;
-                    const CTransaction &tx = *(block.vtx[0]);
-
                     bool foundMasternodePayee = masternodePayments.GetBlockPayee(pindex->nHeight+1, payee);
-
                     if (!foundMasternodePayee || payee == CScript()) {
+                        foundMasternodePayee = false;
+                        foundPayee = true; //doesn't require a specific payee
+
                         // If not in lockdown then allow for no masternode payments.
                         if (!isLockdown) {
-                            foundPayee = true; //doesn't require a specific payee
                             foundPaymentAmount = true;
                             foundPaymentAndPayee = true;
                         }
@@ -3319,6 +3318,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         if(fDebug) LogPrintf("CheckBlock() : non-specific masternode payments %d\n", pindex->nHeight+1);
                     }
 
+                    const CTransaction &tx = *(block.vtx[0]);
                     BOOST_FOREACH(const CTxOut& output, tx.vout) {
                         //REV1 allows for continuous mn payments - not a discrete function
                         // [methuse] FIX: is not in lockdown then allow incorrect check to
@@ -3328,40 +3328,28 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                             break;
                         }
 
+                        if (!isLockdown && output.scriptPubKey == payee)
+                            foundPayee = true;
+
                         // Make sure that at least 1 vout value equals masternode payment
                         // amount and make sure that it matches payee.
                         if (output.nValue == masternodePaymentAmount) {
+                            // During lockdown we want to make sure that the masternode payment
+                            // amount and payee match.
+                            if (isLockdown && output.scriptPubKey == payee) {
+                                foundPayee = true;
+                            }
+
+                            foundPaymentAmount = true;
+
                             if(fDebug) {
                                 CTxDestination address1;
                                 ExtractDestination(output.scriptPubKey, address1);
                                 CMethuselahAddress address2(address1);
 
-                                LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", true, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), pindex->nHeight+1);
-                            }
-
-                            foundPaymentAmount = true;
-
-                            CTxDestination a1;
-                            ExtractDestination(output.scriptPubKey, a1);
-                            CMethuselahAddress a2(a1);
-                            CTxDestination b1;
-                            ExtractDestination(output.scriptPubKey, b1);
-                            CMethuselahAddress b2(b1);
-
-                            // During lockdown we want to make sure that the masternode payment
-                            // amount and payee match.
-                            if (isLockdown && a2 == b2) {
-                                foundPayee = true;
-                            }
-                            // If not a match and debug then log it.
-                            else if (isLockdown && fDebug) { 
-                                LogPrintf("No match: output.scriptPubKey=%s payee=%s same=%s\n", a2.ToString().c_str(), b2.ToString().c_str(), (a2 == b2 ? "Y" : "N"));
+                                LogPrintf("CheckBlock() : found payment[%d|%d] or payee[%d|%s] nHeight %d. \n", foundPaymentAmount, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), pindex->nHeight+1);
                             }
                         }
-
-                        // This is only ok before lockdown.
-                        if (!isLockdown && output.scriptPubKey == payee)
-                            foundPayee = true;
                     }
 
                     CTxDestination address1;
