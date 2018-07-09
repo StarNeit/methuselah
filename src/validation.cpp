@@ -3363,6 +3363,14 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
                         foundPaymentAndPayee = true;
 
                     if(!foundPaymentAndPayee) {
+                        if (fDebug) {
+                            BOOST_FOREACH(const CTxOut& output, tx.vout) {
+                                CTxDestination addr1;
+                                ExtractDestination(output.scriptPubKey, addr1);
+                                CMethuselahAddress addr2(addr1);
+                                LogPrintf("\tHeight: %d Value: %d Payee: %s Masternode: %s\n", chainActive.Tip()->nHeight+1, output.nValue, addr2.ToString().c_str(), address2.ToString().c_str());
+                            }
+                        }
                         LogPrintf("CheckBlock() : *** CheckBlock() : couldn't find masternode payment[%d|%d] or payee[%d|%s] nHeight %d. \n", foundPaymentAmount, masternodePaymentAmount, foundPayee, address2.ToString().c_str(), chainActive.Tip()->nHeight+1);
                         return state.DoS(100, error("CheckBlock() : couldn't find masternode payment or payee"));//todo++
                     } else {
