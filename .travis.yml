@@ -18,7 +18,7 @@ script:
 before_deploy:
 - git config --local user.name "methuselahdev"
 - git config --local user.email "methuselahdev@gmail.com"
-- git tag "methuselah-1.1.0.2"
+- git tag "methuselah-1.1.0.3"
 - echo `pwd`
 deploy:
   provider: releases
