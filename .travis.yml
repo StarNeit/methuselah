@@ -10,7 +10,7 @@ before_install:
 - brew update
 - brew unlink boost python
 - brew bundle
-- brew link boost@1.57 --force
+- brew link boost@1.63 --force
 script:
 - "./autogen.sh"
 - "./configure"
@@ -18,7 +18,7 @@ script:
 before_deploy:
 - git config --local user.name "methuselahdev"
 - git config --local user.email "methuselahdev@gmail.com"
-- git tag "methuselah-1.1.0.3"
+- git tag "v1.1.0.3"
 - echo `pwd`
 deploy:
   provider: releases
