@@ -4,7 +4,6 @@ language: cpp
 compiler: gcc
 env:
   global:
-  - VERSION=1.1.0.4
   - LDFLAGS=-L/usr/local/opt/openssl/lib
   - CPPFLAGS=-I/usr/local/opt/openssl/include
 before_install:
@@ -19,13 +18,13 @@ script:
 before_deploy:
 - git config --local user.name "methuselahdev"
 - git config --local user.email "methuselahdev@gmail.com"
-- git tag "v$VERSION"
+- git tag "v1.1.0.4"
 - echo `pwd`
 deploy:
   provider: releases
   api_key:
     secure: FzfIpkdPVi3NjCDdVYaNII9Zw/h2A9qaBtEMyXSMig8gMY6DdmRiExZC4IROwND2qdWA7CNsUZQ+mS8E4RnpQzMjmMgF0hqdTRBg63bXQ1yGsqdFEENgvD9wAJoQz2YdwFaTZklEYvZkExfc6Wesl/LpaGUIlV2J9PstSdyvSpJyGUD4dZ3orH2xbY9BClXhRvfzenstQXrzS5kfxhMR9VXu1ykEcBcZ+GWwQNF9qPClgyRpxKDO4uCgm6obZ+DnKT2cfaC3aZBCNKEY6b0xAUHNfXp2re26/xaqraUWhQd3C3NikOM6atWyIU/E9bH67co8UY7Jhtoy9kV4ug7h+fPf0ExYzRhNyaDJJXtJYAcWkwK64OcymqiNdmVWUHEO0dr1YwWCMb53LSTmSbveAM4024S4WEGm8ksXpeQjHl3NtnF+/j5UknHmQN+fT0y1z7xb8+sfG8Wc5gBTM+WhBRMNvcL9Kc4g9xGa7X4aEj/hiOZaZfnJzIKJ9EYXzIhWHVYb0gpv9VUR4yoYfuvlLgd3+TgMQzppnNPiWxq8gYHpAoQWqjDKREQZbgsqZSrWn6KZvLTfaJMuEi1+1TXbiQJk3fjVt8UCZ/jmWF+YG5RwaUQFi77Da6M6NZuBjj4/Tbi774wM4mtuz1MBc/kwAo015Nov1yB76xm3gY8jePY=
-  file: methuselah-$VERSION-osx.dmg
+  file: Methuselah-QT.dmg
   overwrite: true
   skip_cleanup: true
   on:
